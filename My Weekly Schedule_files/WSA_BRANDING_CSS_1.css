@@ -1,0 +1,40 @@
+
+#ptbr_header_container #pthdr2container.pthdr2container {
+ background: url(/cs/heprdweb/cache/cache85611/WSANEWBANNER_1.PNG) repeat-x; 
+}
+
+
+#ptdropdownmenu.ptdropdownmenu {
+  background: url(/cs/heprdweb/cache/cache85611/WSANAVBAR_1.PNG) repeat-x; 
+  
+ }
+
+
+#pthdr2navbarlinks.pthdr2navbarlinks #pthdr2addto_div.active {
+  background-color: #b666d2;
+  border: 1px solid #666666;
+}
+
+
+.pthnav .pthnavbaropen {
+  background-color: #4F2683;
+  
+}
+
+#pthdr2container.pthdr2container #wsadbname.greeting {
+color:#FFFFFF;
+}
+
+#pthdr2container.pthdr2container  #pthdr2syslinks.pthdr2syslinks {
+Top:-1px;
+}
+
+
+ #ptdropdownmenu.ptdropdownmenu .pthnavbarfldr:after {
+   content: url(/cs/heprdweb/cache/cache85611/WSADROPDOWN3_1.PNG);
+ }
+
+
+#ptdropdownmenu.ptdropdownmenu li.pthnavhiearchysep:before {
+  content: url(/cs/heprdweb/cache/cache85611/WSAHIEARCHYSEP_1.PNG);
+}

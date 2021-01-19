@@ -1,0 +1,111 @@
+
+
+function PTImage(src)
+{
+ var temp = new Image(); temp.onerror = function(){loadFailed = true;}; temp.src = src; return temp;}
+
+
+
+function calCleanup() {
+ if (typeof _PS_popupCalendar !== "undefined" && _PS_popupCalendar) {
+ closeHandler(_PS_popupCalendar); dateBoxOpen = false; return false; } 
+}
+
+calCleanup();var loadedImages = null;var loadFailed = false;var saveDateItems = null;var bLoaded = false;function loadImages(dateitems)
+{
+if (document.images)
+{
+ saveDateItems = dateitems; loadedImages = new Array(); loadedImages[0] = PTImage(dateitems.pt_dateheader); loadedImages[1] = PTImage(dateitems.pt_datering); loadedImages[2] = PTImage(dateitems.pt_datesel); loadedImages[3] = PTImage(dateitems.pt_prevmonth); loadedImages[4] = PTImage(dateitems.pt_nextmonth); loadedImages[5] = PTImage(dateitems.pt_daystitle_hijri); loadedImages[6] = PTImage(dateitems.pt_daystitle_s0); loadedImages[7] = PTImage(dateitems.pt_daystitle_m1); loadedImages[8] = PTImage(dateitems.pt_daystitle_t2); loadedImages[9] = PTImage(dateitems.pt_daystitle_w3); loadedImages[10] = PTImage(dateitems.pt_daystitle_t4); loadedImages[11] = PTImage(dateitems.pt_daystitle_f5); loadedImages[12] = PTImage(dateitems.pt_daystitle_s6); loadedImages[13] = PTImage(dateitems.pt_daystitle_thai); bLoaded = true;}
+
+calCleanup();}
+
+var dateFormat;var dateFieldToUpdate;var promptField;var submitAfter;var formName;var calendarRetry = 0;var dateBoxOpen = false;var _PS_popupCalendar;var closeCalendar = false;function openDate_win0(e,field,format,bsubmit,cal,firstDayOfWeek)
+{
+ if (bLoaded == false)
+ LoadCalendar(); if(dateBoxOpen) return; dateFieldToUpdate = e; formName = "win0"; calendarType = cal; promptField = field; submitAfter=bsubmit; dateFormat = format; setFocus_win0(field); processing_win0(0); showCalendar_win0(field, format, '24', true,firstDayOfWeek); dateBoxOpen = true;  if (pm)
+ pm.updatePromptMsgEvent(field);   var tablesize = document.getElementById("fullCalendar").offsetWidth-2; var headSize = document.getElementById("headCalendar").offsetWidth; var iFullSize = parseInt(tablesize); var iHeadSize = parseInt(headSize); var iAdjust = iFullSize - iHeadSize; var strHeader; var isTangSS = ((typeof(ptStyleSheet) == "undefined") || (ptStyleSheet.indexOf("TANGERINE") != -1)) ? true : false; var clndrTitle = ""; var clndrTitlePad = "";  if(isTangSS)
+ {
+ clndrTitle = 'Calendar'; if('ltr' == 'ltr')
+ clndrTitlePad = "padding: 5px 5px 5px 20px;"; else
+ clndrTitlePad = "padding: 5px 20px 5px 5px;"; }
+ else
+ {
+ if('ltr' == 'ltr')
+ clndrTitlePad = "padding-right: 5px;"; else
+ clndrTitlePad = "padding-left: 5px;"; }
+
+ if(PTCalendar.is_ie)
+ tablesize += 20; var sCloseJS = "PTCalendar.closeWindow();"; if('ltr' == 'ltr')
+ {
+ strHeader = "<div" + pt_calHeadstyle + " style='" + clndrTitlePad + "height: 20px;'><span role='heading' class='PTCALHEAD_CP' id='clndrtitle' aria-level='1' style='float:left'>" + clndrTitle + "</span>"; strHeader += "<a id='PTClose' href='javascript:"+sCloseJS+"' role='button' title='Close' style='float:right;padding-right:4px;padding-top:2px;'>"; strHeader += "<img alt='Close' src="+ loadedImages[0].src +" height='16' width='16' border='0'/></a></div>"; }
+ else
+ {
+ strHeader = "<div" + pt_calHeadstyle + " style='" + clndrTitlePad + "height: 20px;'><span role='heading' class='PTCALHEAD_CP' id='clndrtitle' aria-level='1'>" + clndrTitle + "</span>"; strHeader += "<a id='PTClose' href='javascript:"+sCloseJS+"' role='button' title='Close' style='float:left;padding-left:4px;padding-top:2px;'>"; strHeader += "<img alt='Close' src="+ loadedImages[0].src +" height='16' width='16' border='0'/></a></div>"; }
+ 
+ if(bWSRP)
+ {
+ if (browserInfoObj2.isIE)
+ strHeader += "<div id='liveMonth' aria-live='polite' style='height: 1px; width: 1px; position: absolute; left: 0; top: -999px; overflow: hidden; z-index:350;'></div>"; strHeader += "<h2 style='height: 1px; left: 0; overflow: hidden; position: absolute; top: -999px; width: 1px; z-index:350;'>";  }
+ else
+ {
+ if (browserInfoObj2.isIE)
+ strHeader += "<div id='liveMonth' aria-live='polite' class='psaccesshidden' style='z-index:350;'></div>"; strHeader += "<h2 class='psaccesshidden' style='z-index:350;'>"; }
+ strHeader += "Use dropdowns for month and year. Use table for day selection.</h2>";  document.getElementById("CalCloseHeader").innerHTML = "";  document.getElementById("CalCloseHeader").innerHTML = strHeader; document.getElementById("fullCalendar").style.width = tablesize + "px"; document.getElementById("headCalendar").style.width = tablesize + "px"; document.getElementById("PTClose").focus();  }
+
+function setResult_win0(dt)
+{
+ var obj = document.win0[dateFieldToUpdate]; addchg_win0(obj); obj.value = pt_formatDate(dt, dateFormat, calendarType); PSclearError_win0(obj); closeCal();  if (submitAfter)
+ submitAction_win0(obj.form,obj.id); else if (typeof obj.onchange != "undefined" && typeof obj.onchange != "unknown" && obj.onchange)
+ {
+ obj.onchange(); PSshowDeferredMsg_win0(); }
+ dateBoxOpen=false;   if (typeof window.top.ptrc != "undefined" && window.top.ptrc != null)
+ window.top.ptrc.refreshRCOnChangeIfNeeded(dateFieldToUpdate);}
+
+function closeCal()
+{
+ if (isFModeLayout())
+ closeLastModal(); dateBoxOpen=false;}
+
+function closeCal2(obj)
+{
+ if (isFModeLayout())
+ closeLastModal(); if (obj.id == promptField && "win0" == formName) return;  if(_PS_popupCalendar != null)
+ closeHandler(_PS_popupCalendar); dateBoxOpen=false;}
+
+function selected_win0(cal, date) 
+{ 
+ if (cal.dateClicked ) 
+ { 
+ if(cal.calType == "H") 
+ {
+ var HijriDate = new window.HijriDate(date.getFullYear(),date.getMonth(),date.getDate());  setResult_win0(HijriDate); } 
+ else
+ setResult_win0(date); cal.destroy();  }
+}
+
+function closeHandler(cal)
+{
+ cal.destroy(); _PS_popupCalendar = null; if (cal.dateClicked && !(isFModeLayout() && isTouchKeyboard()))
+ {
+ var promptEdit = promptField.replace("$prompt", "");  var promptEditObj = document.getElementById(promptEdit); if (typeof promptEditObj != "undefined" && promptEditObj != null) 
+ promptEditObj.focus();  }
+ else 
+ {
+ var promptobj = document.getElementById(promptField); if (typeof promptobj != "undefined" && promptobj != null)
+ promptobj.focus(); }
+}
+
+function showCalendar_win0(id, format, showsTime, showsOtherMonths,firstdayofweek)
+{
+ var fld = document.win0[dateFieldToUpdate];  var el = document.win0[id];  var cal = new PTCalendar(firstdayofweek, null, selected_win0, closeHandler); cal.weekNumbers = false;  cal.setRange(1900, 2100);  var mObj = cal.create(); _PS_popupCalendar = cal; var string = document.win0[dateFieldToUpdate].value; var dt = getDate(string, dateFormat, calendarType); _PS_popupCalendar.setDateFormat(format);  _PS_popupCalendar.parseDate(dt);  _PS_popupCalendar.sel = fld; _PS_popupCalendar.showAtElement(fld.nextSibling,"Br");  _PS_popupCalendar.setFirstDayOfWeek(firstdayofweek);  _PS_popupCalendar = cal;  if (isFModeLayout()) 
+ {
+ var sOptions = "bPIA@1;bPopup@1;bCal@1;bTail@0;bResize@0;bHeader@0;bMask@0;bAutoClose@1;bMask@1;sMaskStyle@ps_masktrans;sStyle@ps_calendar_modal;"; if (sOptions.indexOf("sPopupParent") == -1)
+ sOptions += "sPopupParentId@" + promptField+";"; mObj.setAttribute('options', sOptions); bLocalModal = true; addDivPopup(mObj, window, sOptions); mObj.style.display = "block"; playDivPopup(); }
+ return false;}
+window._PS_popupCalendar = null;function DatePrompt_win0(dtfield, promptfield, yrfmt, bsubmit) 
+{
+ if (isFModeLayout() && isTouchKeyboard()) 
+ {
+ var sScript = "DatePrompt0_win0('" + dtfield + "','" + promptfield + "'," + yrfmt + "," + bsubmit + ");"; doGrouplet("runScript@setTimeout(function () {" + sScript + " }, 200);"); }
+ else
+ DatePrompt0_win0(dtfield, promptfield, yrfmt, bsubmit);}
